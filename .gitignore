@@ -1,7 +1,8 @@
 /node_modules
 
-log.txt
+*.txt
 
 # IntelliJ
 *.iml
 /.idea
+index.js
