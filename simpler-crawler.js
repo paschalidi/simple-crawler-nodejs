@@ -28,7 +28,7 @@ CrawlingResults.prototype.updateAssets = function (asset) {
 };
 
 CrawlingResults.prototype.writeInfoToStdout = function () {
-  logger.write('1') // again
+  logger.write(JSON.stringify(this)); // again
 };
 
 CrawlingResults.prototype.writeErrorToStdout = function () {
