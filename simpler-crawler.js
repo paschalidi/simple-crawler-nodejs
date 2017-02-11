@@ -10,9 +10,8 @@ const Readline = require('readline');
 const fs = require('fs');
 
 const logger = fs.createWriteStream('log.txt', {
-  flags: 'a' // 'a' means appending (old data will be preserved)
+  flags: 'w+'
 });
-
 const rl = Readline.createInterface({
   input: process.stdin,
   output: process.stdout
@@ -31,9 +30,6 @@ CrawlingResults.prototype.writeInfoToStdout = function () {
   logger.write(JSON.stringify(this)); // again
 };
 
-CrawlingResults.prototype.writeErrorToStdout = function () {
-
-};
 
 var Crawler = function (input) {
   this.theUrl = input;
@@ -113,7 +109,8 @@ function crawlNextPage(theCrawler) {
         console.error("[!] Response error: ", error.name);
         console.log(theCrawler.nextPage);
 
-        theCrawlingResult.writeErrorToStdout(error.name);
+        theCrawlingResult.updateAssets(error.name);
+        theCrawlingResult.writeInfoToStdout();
 
         if (theCrawler.pagesToVisit.length > 0)
           crawlNextPage(theCrawler)
