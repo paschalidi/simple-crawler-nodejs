@@ -1,0 +1,15 @@
+{
+  "version": "0.0.0",
+  "name": "simple-crawler-nodejs",
+  "description": "A simple webcrawler written in JavaScript",
+  "main": "crawler.js",
+  "author": "Christos",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^0.19.0",
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1",
+    "url-parse": "^1.0.5"
+  },
+  "devDependencies": {}
+}
