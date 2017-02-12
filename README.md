@@ -17,8 +17,8 @@ $ npm install
 
 ##How to run
 
-$ node index.js
+$ npm start
 
 #How to test
-
+$ npm test
 
