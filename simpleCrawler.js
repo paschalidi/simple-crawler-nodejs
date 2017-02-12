@@ -115,4 +115,4 @@ function isUrl(string) {
   return regexp.test(string);
 }
 
-askInputFromUser();
+module.exports.askInputFromUser = askInputFromUser;
