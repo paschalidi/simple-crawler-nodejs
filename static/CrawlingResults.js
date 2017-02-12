@@ -20,7 +20,7 @@ CrawlingResults.prototype.updateAssets = function (asset) {
 };
 
 CrawlingResults.prototype.writeInfoToStdout = function () {
-  logger.write(JSON.stringify(this)); // again
+  logger.write(JSON.stringify(this));
 };
 
 module.exports = CrawlingResults;
