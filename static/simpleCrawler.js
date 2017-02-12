@@ -15,7 +15,9 @@ const rl = Readline.createInterface({
   output: process.stdout
 });
 
-function askInputFromUser() {
+exports = module.exports = {};
+
+exports.askInputFromUser = function () {
   rl.question('Please provide a url of the following form: https://www.someUrl.com\n',
     function (keyboardInput) {
       var candidateUrl = keyboardInput;
@@ -49,10 +51,8 @@ function askInputFromUser() {
       Request(options)
         .then(function ($) {
           theCrawler.setPageVisited();
-
           collectInternalLinks($, theCrawler, theCrawlingResult);
           collectInternalAssets($, theCrawler, theCrawlingResult);
-
           theCrawlingResult.writeInfoToStdout();
 
           if (theCrawler.pagesToVisit.length > 0)
@@ -60,8 +60,9 @@ function askInputFromUser() {
         })
         .catch(function (error) {
           console.error("[!] Response error: ", error.name);
-          console.log(theCrawler.nextPage);
+          console.error("[!]", theCrawler.nextPage);
 
+          theCrawler.setPageVisited();
           theCrawlingResult.updateAssets(error.name);
           theCrawlingResult.writeInfoToStdout();
 
@@ -95,11 +96,9 @@ function askInputFromUser() {
     function filterLinksAndUpdatePagesToVisit(links, theCrawler, $) {
       links.each(function () {
         var link = theCrawler.baseUrl + $(this).attr('href');
-        if (!(theCrawler.pagesToVisit.includes(link))) {
-          theCrawler.updatePagesToVisit(link);
-        }
-      });
 
+        theCrawler.updatePagesToVisit(link);
+      });
     }
 
     function messageToConsole(theCrawler) {
@@ -109,6 +108,4 @@ function askInputFromUser() {
       console.log('[info] Left to visit ' + theCrawler.pagesToVisit.length + ' pages.');
     }
   }
-}
-
-module.exports.askInputFromUser = askInputFromUser;
+};
