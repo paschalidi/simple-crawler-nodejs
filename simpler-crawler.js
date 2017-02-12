@@ -3,62 +3,17 @@
  */
 
 "use strict";
-const URL = require('url-parse');
+const Crawler = require('./Crawler.js');
+const CrawlingResults = require('./CrawlingResults.js');
+
 const Request = require("request-promise");
 const Cheerio = require('cheerio');
 const Readline = require('readline');
-const fs = require('fs');
 
-const logger = fs.createWriteStream('log.txt', {
-  flags: 'w+'
-});
 const rl = Readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
-
-var CrawlingResults = function (page) {
-  this.page = page;
-  this.assets = [];
-};
-
-CrawlingResults.prototype.updateAssets = function (asset) {
-  this.assets.push(asset)
-};
-
-CrawlingResults.prototype.writeInfoToStdout = function () {
-  logger.write(JSON.stringify(this)); // again
-};
-
-
-var Crawler = function (input) {
-  this.theUrl = input;
-  this.baseProperties = new URL(input);
-  this.baseUrl = this.baseProperties.protocol + "//" + this.baseProperties.hostname;
-
-  this.pagesVisited = [];
-  this.pagesToVisit = [];
-
-  this.pagesToVisit.push(this.theUrl);
-};
-
-Crawler.prototype.selectNextPage = function () {
-  this.nextPage = this.pagesToVisit.pop() || [];
-
-  while (this.pagesVisited.includes(this.nextPage)) {
-    this.nextPage = this.pagesToVisit.pop();
-    console.log('*******')
-  }
-};
-
-Crawler.prototype.setPageVisited = function () {
-  if (!this.pagesVisited.includes(this.nextPage))
-    this.pagesVisited.push(this.nextPage);
-};
-
-Crawler.prototype.updatePagesToVisit = function (aPage) {
-  this.pagesToVisit.push(aPage);
-};
 
 function askInputFromUser() {
   rl.question('Please provide a url of theCrawler following form: https://www.example.com\n',
@@ -81,6 +36,7 @@ function crawlNextPage(theCrawler) {
     makeRequest(theCrawler);
 
   function makeRequest(theCrawler) {
+    messageToConsole(theCrawler);
     var options = {
       uri: theCrawler.nextPage,
       transform: function (body) {
@@ -88,10 +44,6 @@ function crawlNextPage(theCrawler) {
       }
     };
     var theCrawlingResult = new CrawlingResults(theCrawler.nextPage);
-
-    console.log(theCrawler);
-    console.log('VISITED    ----->', theCrawler.pagesVisited.length);
-    console.log('STILL LEFT ----->', theCrawler.pagesToVisit.length);
 
     Request(options)
       .then(function ($) {
@@ -149,6 +101,13 @@ function crawlNextPage(theCrawler) {
 
   }
 
+  function messageToConsole(theCrawler) {
+    console.log('-------------------------------------------');
+    console.log('Now Visiting page :', theCrawler.nextPage);
+    console.log('-------------------------------------------');
+    console.log('[info] Already visited ' + theCrawler.pagesVisited.length + ' pages.');
+    console.log('[info] Left to visit ' + theCrawler.pagesToVisit.length + ' pages.');
+  }
 }
 
 function isUrl(string) {
@@ -157,8 +116,3 @@ function isUrl(string) {
 }
 
 askInputFromUser();
-
-
-
-
-
