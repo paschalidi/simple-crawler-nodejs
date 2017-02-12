@@ -6,7 +6,7 @@
 "use strict";
 const fs = require('fs');
 
-const logger = fs.createWriteStream('log.json', {
+const logger = fs.createWriteStream('./results/log.json', {
   flags: 'w+'
 });
 

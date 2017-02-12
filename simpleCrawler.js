@@ -3,8 +3,8 @@
  */
 
 "use strict";
-const Crawler = require('./Crawler.js');
-const CrawlingResults = require('./CrawlingResults.js');
+const Crawler = require('./static/Crawler.js');
+const CrawlingResults = require('./static/CrawlingResults.js');
 
 const Request = require("request-promise");
 const Cheerio = require('cheerio');
