@@ -3,6 +3,6 @@
  */
 
 "use strict";
-const start = require('./static/module.userInput.js');
+const start = require('./static/module.simpleCrawler.js');
 
 start.askInputFromUser();

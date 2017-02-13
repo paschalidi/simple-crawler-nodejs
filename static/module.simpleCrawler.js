@@ -33,10 +33,11 @@ function askInputFromUser() {
 
   function crawlNextPage(theCrawler) {
     theCrawler.selectNextPage();
-    messageToConsole(theCrawler);
 
-    if (theCrawler.nextPage)
+    if (theCrawler.nextPage) {
+      messageToConsole(theCrawler);
       makeRequest(theCrawler);
+    }
 
     function makeRequest(theCrawler) {
       var options = {
@@ -102,7 +103,6 @@ function askInputFromUser() {
     function messageToConsole(theCrawler) {
       console.log('-------------------------------------------');
       console.log('Now Visiting page :', theCrawler.nextPage);
-      console.log('-------------------------------------------');
       console.log('[info] Left to visit ' + theCrawler.pagesToVisit.length + ' pages.');
     }
   }

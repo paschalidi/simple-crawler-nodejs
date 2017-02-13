@@ -24,12 +24,10 @@ Crawler.prototype.selectNextPage = function () {
 };
 
 Crawler.prototype.setPageVisited = function () {
-  //todo is if needed ?
-  if (!this.pagesVisited.includes(this.nextPage))
     this.pagesVisited.push(this.nextPage);
 };
 
-Crawler.prototype.updatePagesToVisit = function (newPage) {   
+Crawler.prototype.updatePagesToVisit = function (newPage) {
   if (!(this.pagesToVisit.includes(newPage)))
     this.pagesToVisit.push(newPage);
 };
