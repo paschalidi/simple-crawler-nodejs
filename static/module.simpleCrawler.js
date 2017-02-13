@@ -15,9 +15,7 @@ const rl = Readline.createInterface({
   output: process.stdout
 });
 
-exports = module.exports = {};
-
-exports.askInputFromUser = function () {
+function askInputFromUser() {
   rl.question('Please provide a url of the following form: https://www.someUrl.com\n',
     function (keyboardInput) {
       var candidateUrl = keyboardInput;
@@ -35,6 +33,7 @@ exports.askInputFromUser = function () {
 
   function crawlNextPage(theCrawler) {
     theCrawler.selectNextPage();
+    messageToConsole(theCrawler);
 
     if (theCrawler.nextPage)
       makeRequest(theCrawler);
@@ -47,7 +46,6 @@ exports.askInputFromUser = function () {
       };
       var theCrawlingResult = new CrawlingResults(theCrawler.nextPage);
 
-      messageToConsole(theCrawler);
       Request(options)
         .then(function ($) {
           theCrawler.setPageVisited();
@@ -108,4 +106,6 @@ exports.askInputFromUser = function () {
       console.log('[info] Left to visit ' + theCrawler.pagesToVisit.length + ' pages.');
     }
   }
-};
+}
+
+module.exports.askInputFromUser = askInputFromUser;
