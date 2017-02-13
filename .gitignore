@@ -3,6 +3,3 @@
 # IntelliJ
 *.iml
 /.idea
-
-results/
-tests/
