@@ -102,7 +102,7 @@ function askInputFromUser() {
 
     function messageToConsole(theCrawler) {
       console.log('-------------------------------------------');
-      console.log('Now Visiting page :', theCrawler.nextPage);
+      console.log('Now Crawls page :', theCrawler.nextPage);
       console.log('[info] Left to visit ' + theCrawler.pagesToVisit.length + ' pages.');
     }
   }
